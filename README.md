@@ -19,11 +19,20 @@ source .venv/bin/activate
 pip install -r src/requirements.txt
 ```
 
-Store your API key in a systemd credential (used by `src/orchestrator.py`):
+Store your API key in a systemd credential:
 
 ```bash
 sudo install -d /etc/credstore.encrypted
 printf '%s' "$OPENAI_API_KEY" | sudo systemd-creds encrypt - /etc/credstore.encrypted/codex_key
+```
+
+Configuration is managed via `src/.env`. Ensure it contains the path to your credential and your model preferences:
+```json
+{
+  "CREDENTIAL_PATH": "/etc/credstore.encrypted/codex_key",
+  "INTERLLM_MODEL": "gpt-5-codex",
+  "INTERLLM_REASONING_EFFORT": "medium"
+}
 ```
 
 ## Run
@@ -64,7 +73,5 @@ Useful flags:
 - The `outputs/` directory is cleared at the start of each run.
 - Relative paths are resolved from the repository root.
 - Reasoning effort is optional and only applied for GPT-5 or o-series models.
-- The Codex MCP server is launched with the same `INTERLLM_MODEL` and (when
-  supported) `INTERLLM_REASONING_EFFORT`.
-- Future target: once validated, we plan to move to `INTERLLM_MODEL=gpt-5.2-codex`
-  with `INTERLLM_REASONING_EFFORT=medium`.
+- The Codex MCP server is launched with the configured model and reasoning effort.
+- Future target: once validated, we plan to move to `gpt-5.2-codex` with medium reasoning effort.

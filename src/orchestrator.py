@@ -5,7 +5,6 @@ import argparse
 import asyncio
 import json
 import logging
-import os
 import re
 import shutil
 import subprocess
@@ -22,7 +21,6 @@ from agents import Agent, ModelSettings, Runner, set_default_openai_api
 from agents.mcp import MCPServerStdio
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-CRED_FILE = Path("/etc/credstore.encrypted/codex_key")
 
 SCENARIO_HEADER_RE = re.compile(
     r"^(?P<hashes>#{1,6})\s+(?P<number>\d+(?:\.\d+)*)\)\s+(?P<title>.+?)\s*$"
@@ -70,6 +68,17 @@ class Scenario:
         return f"{self.number}) {self.title}".strip()
 
 
+def load_configuration(env_path: Path) -> dict[str, str]:
+    """Loads configuration from a JSON formatted .env file."""
+    if not env_path.exists():
+        raise FileNotFoundError(f"Configuration file not found: {env_path}")
+    try:
+        with env_path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Failed to parse configuration file: {e}")
+
+
 def normalize_ascii(text: str) -> str:
     replacements = {
         "\u2018": "'",
@@ -87,7 +96,7 @@ def normalize_ascii(text: str) -> str:
 
 def _decrypt_credential(path: Path) -> str:
     process = subprocess.Popen(
-        ["systemd-creds", "decrypt", str(path)]
+        ["systemd-creds", "decrypt", str(path)],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
@@ -102,10 +111,11 @@ def _decrypt_credential(path: Path) -> str:
 
 
 @lru_cache(maxsize=1)
-def load_api_key() -> str:
-    if not CRED_FILE.exists():
-        raise FileNotFoundError(f"Encrypted credential not found: {CRED_FILE}")
-    return _decrypt_credential(CRED_FILE)
+def load_api_key(credential_path: str) -> str:
+    path = Path(credential_path)
+    if not path.exists():
+        raise FileNotFoundError(f"Encrypted credential not found: {path}")
+    return _decrypt_credential(path)
 
 
 def escape_braces(text: str) -> str:
@@ -302,7 +312,7 @@ async def calibrate_executor(
         )
 
 
-def build_arg_parser() -> argparse.ArgumentParser:
+def build_arg_parser(config: dict[str, str]) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Sequential scenario orchestration using Codex MCP + Agents SDK."
     )
@@ -343,12 +353,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--model",
-        default=os.getenv("INTERLLM_MODEL", "gpt-4o"),
+        default=config.get("INTERLLM_MODEL", "gpt-4o"),
         help="Model name for Scheduler and Executor agents.",
     )
     parser.add_argument(
         "--reasoning-effort",
-        default=os.getenv("INTERLLM_REASONING_EFFORT", ""),
+        default=config.get("INTERLLM_REASONING_EFFORT", ""),
         help="Reasoning effort: minimal|low|medium|high (GPT-5/o-series only).",
     )
     parser.add_argument(
@@ -423,9 +433,11 @@ def prepare_output_dir(output_dir: Path) -> None:
 
 async def main() -> None:
     logging.getLogger().setLevel(logging.ERROR)
-    args = build_arg_parser().parse_args()
+    
+    config = load_configuration(ROOT_DIR / "src/.env")
+    args = build_arg_parser(config).parse_args()
 
-    api_key = load_api_key()
+    api_key = load_api_key(config.get("CREDENTIAL_PATH", ""))
     set_default_openai_api(api_key)
     model_settings = resolve_model_settings(args.model, args.reasoning_effort)
     if model_settings is None:
