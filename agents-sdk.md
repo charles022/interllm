@@ -19,12 +19,13 @@ Before starting, make sure you have:
 - Node.js 18+ (required for `npx`).
 - An OpenAI API key stored locally. You can create or manage keys in the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 
-Create a working directory for the guide and add your API key to a `.env` file:
+Create a working directory for the guide and add your API key to `src/.env`:
 
 ```bash
 mkdir codex-workflows
 cd codex-workflows
-printf "OPENAI_API_KEY=sk-..." > .env
+mkdir -p src
+printf "OPENAI_API_KEY=sk-..." > src/.env
 ```
 
 ## Install dependencies
@@ -99,7 +100,7 @@ from dotenv import load_dotenv
 from agents import Agent, Runner, set_default_openai_api
 from agents.mcp import MCPServerStdio
 
-load_dotenv(override=True)
+load_dotenv("src/.env", override=True)
 set_default_openai_api(os.getenv("OPENAI_API_KEY"))
 
 
@@ -173,7 +174,7 @@ from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 from agents.mcp import MCPServerStdio
 from openai.types.shared import Reasoning
 
-load_dotenv(override=True)
+load_dotenv("src/.env", override=True)
 set_default_openai_api(os.getenv("OPENAI_API_KEY"))
 
 
