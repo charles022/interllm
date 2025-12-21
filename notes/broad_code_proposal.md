@@ -26,7 +26,7 @@ We need to ensure the agents always write files without asking for permission (c
 
 This Python script replaces the manual process. It uses `MCPServerStdio` to keep Codex alive, allowing the context to persist across the entire batch job.
 
-**File:** `orchestrator.py`
+**File:** `src/orchestrator.py`
 
 #### A. Initialization
 

@@ -1,0 +1,121 @@
+[chuck@7510 interllm | 1766272489 | 11549.13]$ source .venv/bin/activate && python src/orchestrator.py
+2025-12-21T02:45:05.763198Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:45:28.166475Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:56:08.082866Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:56:20.246063Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:57:29.097894Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:57:53.007681Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:58:42.239445Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:59:16.402303Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T02:59:20.275645Z ERROR codex_core::exec: exec error: No such file or directory (os error 2)
+2025-12-21T03:02:17.569108Z ERROR codex_api::endpoint::responses: error=http 400 Bad Request: Some("{\"detail\":\"The '' model is not supported when using Codex with a ChatGPT account.\"}")
+ERROR:openai.agents:Error invoking MCP tool codex: 1 validation error for CallToolResult
+content
+  Field required [type=missing, input_value={'error': '{"detail":"The...h a ChatGPT account."}'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+Traceback (most recent call last):
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/mcp/util.py", line 203, in invoke_mcp_tool
+    result = await server.call_tool(tool.name, json_data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/mcp/server.py", line 327, in call_tool
+    return await self._run_with_retries(lambda: session.call_tool(tool_name, arguments))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/mcp/server.py", line 258, in _run_with_retries
+    return await func()
+           ^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/mcp/client/session.py", line 383, in call_tool
+    result = await self.send_request(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/mcp/shared/session.py", line 308, in send_request
+    return result_type.model_validate(response_or_error.result)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/pydantic/main.py", line 716, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for CallToolResult
+content
+  Field required [type=missing, input_value={'error': '{"detail":"The...h a ChatGPT account."}'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/chuck/code/interllm/src/orchestrator.py", line 488, in <module>
+    asyncio.run(main())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/chuck/code/interllm/src/orchestrator.py", line 475, in main
+    await run_executor(
+    ...<6 lines>...
+    )
+  File "/home/chuck/code/interllm/src/orchestrator.py", line 260, in run_executor
+    await Runner.run(executor, prompt)
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/run.py", line 367, in run
+    return await runner.run(
+           ^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/run.py", line 664, in run
+    input_guardrail_results, turn_result = await asyncio.gather(
+                                           ^^^^^^^^^^^^^^^^^^^^^
+    ...<18 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/run.py", line 1631, in _run_single_turn
+    return await cls._get_single_step_result_from_response(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/run.py", line 1680, in _get_single_step_result_from_response
+    return await RunImpl.execute_tools_and_side_effects(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/_run_impl.py", line 306, in execute_tools_and_side_effects
+    ) = await asyncio.gather(
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<35 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/_run_impl.py", line 1012, in execute_function_tool_calls
+    results = await asyncio.gather(*tasks)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/_run_impl.py", line 1000, in run_single_tool
+    raise e
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/_run_impl.py", line 963, in run_single_tool
+    real_result = await cls._execute_tool_with_hooks(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/_run_impl.py", line 920, in _execute_tool_with_hooks
+    return await func_tool.on_invoke_tool(tool_context, tool_call.arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chuck/code/interllm/.venv/lib64/python3.13/site-packages/agents/mcp/util.py", line 206, in invoke_mcp_tool
+    raise AgentsException(f"Error invoking MCP tool {tool.name}: {e}") from e
+agents.exceptions.AgentsException: Error invoking MCP tool codex: 1 validation error for CallToolResult
+content
+  Field required [type=missing, input_value={'error': '{"detail":"The...h a ChatGPT account."}'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+

@@ -1,0 +1,16 @@
+You are the Executor. Craft a precise, implementation-ready guidance note.
+
+Scenario: {SCENARIO_ID}) {SCENARIO_TITLE}
+Scenario Details:
+{SCENARIO_BODY}
+
+Output Specifications:
+- Direct the output to {OUTPUT_PATH}.
+- Employ Markdown headings and bullet points.
+- Include these sections: Scenario, When to Use, Recommended Approach, Implementation Outline, Tradeoffs/Risks, Validation Checklist.
+- Limit to 250 words.
+- Ensure ASCII only.
+- Strictly adhere to scenario text; do not fabricate requirements.
+
+For file creation, utilize Codex MCP with {"approval-policy":"never","sandbox":"workspace-write"}.
+Upon file completion, respond with "DONE".
