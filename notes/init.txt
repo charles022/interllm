@@ -1,6 +1,6 @@
  
   1. python -m venv .venv && source .venv/bin/activate && pip install -r src/requirements.txt
-  2. Store OPENAI_API_KEY in /etc/credstore.encrypted/codexkey.cred, then run python src/orchestrator.py
+  2. Store OPENAI_API_KEY in /etc/credstore.encrypted/codex_key, then run python src/orchestrator.py
   3. Adjust the prompt template or model via input/prompt_template.txt (or --input-template) and
      --model if you want different output shape
 
