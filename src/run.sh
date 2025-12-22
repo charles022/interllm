@@ -34,4 +34,18 @@ fi
 
 # Run the orchestrator with any passed arguments
 echo "Running src/orchestrator.py from $PROJECT_ROOT..."
-exec python src/orchestrator.py "$@"
+
+# Extract CREDENTIAL_PATH from src/.env (if it exists)
+CRED_PATH=""
+if [ -f "src/.env" ]; then
+    CRED_PATH=$(python3 -c "import json, sys; print(json.load(open('src/.env')).get('CREDENTIAL_PATH', ''))" 2>/dev/null || true)
+fi
+
+if [ -n "$CRED_PATH" ]; then
+    echo "Using secure credential wrapper with $CRED_PATH"
+    # Execute via the wrapper script which handles sudo decryption
+    exec "$PROJECT_ROOT/src/run_with_api_key_fd.sh" "$CRED_PATH" -- python src/orchestrator.py "$@"
+else
+    echo "Error: CREDENTIAL_PATH must be set in src/.env to use the secure wrapper." >&2
+    exit 1
+fi

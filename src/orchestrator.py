@@ -94,28 +94,21 @@ def normalize_ascii(text: str) -> str:
     return text.encode("ascii", "ignore").decode("ascii")
 
 
-def _decrypt_credential(path: Path) -> str:
-    process = subprocess.Popen(
-        ["systemd-creds", "decrypt", str(path)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    out, err = process.communicate()
-    if process.returncode != 0:
-        raise RuntimeError(f"Credential decryption failed: {err.strip()}")
-    s = out.strip()
-    if not s:
-        raise RuntimeError("Decryption produced no output; verify systemd-creds decrypt behavior on this host")
-    return s
-
-
 @lru_cache(maxsize=1)
 def load_api_key(credential_path: str) -> str:
-    path = Path(credential_path)
-    if not path.exists():
-        raise FileNotFoundError(f"Encrypted credential not found: {path}")
-    return _decrypt_credential(path)
+    """Loads the API key strictly from file descriptor 3."""
+    import os
+    try:
+        with os.fdopen(3, "r") as f:
+            key = f.read().strip()
+            if not key:
+                raise RuntimeError("API key read from FD 3 was empty.")
+            return key
+    except OSError as e:
+        raise RuntimeError(
+            "API key FD 3 not available. This application must be launched "
+            "via the secure wrapper script (src/run_with_api_key_fd.sh)."
+        ) from e
 
 
 def escape_braces(text: str) -> str:
