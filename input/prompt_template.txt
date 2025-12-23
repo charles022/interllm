@@ -12,5 +12,4 @@ Output Specifications:
 - Ensure ASCII only.
 - Strictly adhere to scenario text; do not fabricate requirements.
 
-For file creation, utilize Codex MCP with {"approval-policy":"never","sandbox":"workspace-write"}.
 Upon file completion, respond with "DONE".

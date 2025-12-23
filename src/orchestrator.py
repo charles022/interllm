@@ -41,7 +41,6 @@ Output requirements:
 - ASCII only.
 - Do not invent requirements beyond the scenario text.
 
-When creating files, call Codex MCP with {"approval-policy":"never","sandbox":"workspace-write"}.
 After writing the file, reply with "DONE".
 """
 
@@ -408,7 +407,16 @@ def resolve_codex_reasoning_effort(effort: str) -> str | None:
 
 
 def build_codex_args(model_name: str, effort: str) -> list[str]:
-    args: list[str] = ["-y", "codex", "--model", model_name]
+    args: list[str] = [
+        "-y",
+        "codex",
+        "--model",
+        model_name,
+        "--ask-for-approval",
+        "never",
+        "--sandbox",
+        "workspace-write",
+    ]
     codex_effort = resolve_codex_reasoning_effort(effort)
     if codex_effort:
         args.extend(["--config", f'model_reasoning_effort="{codex_effort}"'])
