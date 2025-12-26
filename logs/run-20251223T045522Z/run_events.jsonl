@@ -1,0 +1,2 @@
+{"ts": "2025-12-23T04:55:22+00:00", "event": "run_start", "run_id": "20251223T045522Z", "log_dir": "logs/run-20251223T045522Z", "model": "gpt-5-codex", "reasoning_effort": "medium"}
+{"ts": "2025-12-23T04:55:22+00:00", "event": "codex_mcp_command", "command": ["npx", "-y", "codex", "--model", "gpt-5-codex", "--ask-for-approval", "never", "--sandbox", "workspace-write", "--config", "model_reasoning_effort=\"medium\"", "mcp-server"]}

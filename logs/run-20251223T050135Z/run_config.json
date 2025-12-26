@@ -1,0 +1,15 @@
+{
+  "run_id": "20251223T050135Z",
+  "input_path": "input/DataTransferScenarioList.md",
+  "input_template_path": "input/prompt_template.txt",
+  "base_template_path": "src/prompt_template_base.txt",
+  "output_dir": "outputs",
+  "todo_path": "outputs/todo_scenarios.txt",
+  "results_path": "outputs/MASTER_RESULTS.md",
+  "prompt_template_path": "outputs/prompt_template.txt",
+  "model": "gpt-5-codex",
+  "reasoning_effort": "medium",
+  "max_scenarios": null,
+  "overwrite": false,
+  "log_dir": "logs/run-20251223T050135Z"
+}

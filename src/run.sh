@@ -44,6 +44,11 @@ if [ -f "src/.env" ]; then
     CRED_PATH=$(python3 -c "import json, sys; print(json.load(open('src/.env')).get('CREDENTIAL_PATH', ''))" 2>/dev/null || true)
 fi
 
+if [ -n "${CREDENTIALS_DIRECTORY:-}" ]; then
+    echo "Detected systemd credentials; launching without sudo wrapper."
+    exec python src/orchestrator.py "$@"
+fi
+
 if [ -n "$CRED_PATH" ]; then
     echo "Using secure credential wrapper with $CRED_PATH"
     # Execute via the wrapper script which handles sudo decryption

@@ -1,0 +1,85 @@
+2025-12-23T00:11:33Z DEBUG openai.agents: Creating trace Agent workflow with id trace_f5b6515ff79945d0ba4e6881bba70734
+2025-12-23T00:11:33Z DEBUG openai.agents: Setting current trace: trace_f5b6515ff79945d0ba4e6881bba70734
+2025-12-23T00:11:33Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332e07d1d0> with id None
+2025-12-23T00:11:33Z DEBUG openai.agents: Creating span <agents.tracing.span_data.AgentSpanData object at 0x7f332e0e2d50> with id None
+2025-12-23T00:11:33Z DEBUG openai.agents: Running agent Scheduler (turn 1)
+2025-12-23T00:11:33Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332f0baf10> with id None
+2025-12-23T00:11:33Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:11:38Z DEBUG openai.agents: Exported 2 items
+2025-12-23T00:11:40Z DEBUG openai.agents: LLM responded
+2025-12-23T00:11:40Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:11:40Z DEBUG openai.agents: Processing output item type=message class=ResponseOutputMessage
+2025-12-23T00:11:40Z DEBUG openai.agents: Resetting current trace
+2025-12-23T00:11:40Z DEBUG openai.agents: Creating trace Agent workflow with id trace_5762f39369f74a53a88b9d31c7ce14cd
+2025-12-23T00:11:40Z DEBUG openai.agents: Setting current trace: trace_5762f39369f74a53a88b9d31c7ce14cd
+2025-12-23T00:11:40Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332cce76d0> with id None
+2025-12-23T00:11:40Z DEBUG openai.agents: Creating span <agents.tracing.span_data.AgentSpanData object at 0x7f332e0e2a30> with id None
+2025-12-23T00:11:40Z DEBUG openai.agents: Running agent Executor (turn 1)
+2025-12-23T00:11:40Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332db6e690> with id None
+2025-12-23T00:11:40Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:11:44Z DEBUG openai.agents: Exported 4 items
+2025-12-23T00:11:58Z DEBUG openai.agents: LLM responded
+2025-12-23T00:11:58Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:11:58Z DEBUG openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2025-12-23T00:11:58Z DEBUG openai.agents: Creating span <agents.tracing.span_data.FunctionSpanData object at 0x7f332c2869e0> with id None
+2025-12-23T00:11:58Z DEBUG openai.agents: Invoking MCP tool codex
+2025-12-23T00:11:59Z DEBUG openai.agents: Exported 1 items
+2025-12-23T00:12:11Z DEBUG openai.agents: MCP tool codex completed.
+2025-12-23T00:12:11Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332cce7550> with id None
+2025-12-23T00:12:11Z DEBUG openai.agents: Running agent Executor (turn 2)
+2025-12-23T00:12:11Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332c270110> with id None
+2025-12-23T00:12:11Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:12:13Z DEBUG openai.agents: LLM responded
+2025-12-23T00:12:13Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:12:13Z DEBUG openai.agents: Processing output item type=message class=ResponseOutputMessage
+2025-12-23T00:12:13Z DEBUG openai.agents: Resetting current trace
+2025-12-23T00:12:13Z DEBUG openai.agents: Creating trace Agent workflow with id trace_f763e11dcfc245928bf1b1ae7892f097
+2025-12-23T00:12:13Z DEBUG openai.agents: Setting current trace: trace_f763e11dcfc245928bf1b1ae7892f097
+2025-12-23T00:12:13Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332c27bf50> with id None
+2025-12-23T00:12:13Z DEBUG openai.agents: Creating span <agents.tracing.span_data.AgentSpanData object at 0x7f332c2853b0> with id None
+2025-12-23T00:12:13Z DEBUG openai.agents: Running agent Executor (turn 1)
+2025-12-23T00:12:13Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332dbc6790> with id None
+2025-12-23T00:12:13Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:12:14Z DEBUG openai.agents: Exported 6 items
+2025-12-23T00:12:27Z DEBUG openai.agents: LLM responded
+2025-12-23T00:12:27Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:12:27Z DEBUG openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2025-12-23T00:12:27Z DEBUG openai.agents: Creating span <agents.tracing.span_data.FunctionSpanData object at 0x7f332cbdff20> with id None
+2025-12-23T00:12:27Z DEBUG openai.agents: Invoking MCP tool codex
+2025-12-23T00:12:30Z DEBUG openai.agents: Exported 1 items
+2025-12-23T00:12:41Z DEBUG openai.agents: MCP tool codex completed.
+2025-12-23T00:12:41Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332dbad6d0> with id None
+2025-12-23T00:12:41Z DEBUG openai.agents: Running agent Executor (turn 2)
+2025-12-23T00:12:41Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332c13ae50> with id None
+2025-12-23T00:12:41Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:12:43Z DEBUG openai.agents: LLM responded
+2025-12-23T00:12:43Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:12:43Z DEBUG openai.agents: Processing output item type=message class=ResponseOutputMessage
+2025-12-23T00:12:43Z DEBUG openai.agents: Resetting current trace
+2025-12-23T00:12:43Z DEBUG openai.agents: Creating trace Agent workflow with id trace_18fa1386282c499d8c9546071026acf2
+2025-12-23T00:12:43Z DEBUG openai.agents: Setting current trace: trace_18fa1386282c499d8c9546071026acf2
+2025-12-23T00:12:43Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332c13f910> with id None
+2025-12-23T00:12:43Z DEBUG openai.agents: Creating span <agents.tracing.span_data.AgentSpanData object at 0x7f332c286bc0> with id None
+2025-12-23T00:12:43Z DEBUG openai.agents: Running agent Executor (turn 1)
+2025-12-23T00:12:43Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332cbe25d0> with id None
+2025-12-23T00:12:43Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:12:45Z DEBUG openai.agents: Exported 6 items
+2025-12-23T00:13:00Z DEBUG openai.agents: LLM responded
+2025-12-23T00:13:00Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:13:00Z DEBUG openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2025-12-23T00:13:00Z DEBUG openai.agents: Creating span <agents.tracing.span_data.FunctionSpanData object at 0x7f332c135040> with id None
+2025-12-23T00:13:00Z DEBUG openai.agents: Invoking MCP tool codex
+2025-12-23T00:13:00Z WARNING openai.agents: [non-fatal] Tracing: server error 503, retrying.
+2025-12-23T00:13:02Z DEBUG openai.agents: Exported 1 items
+2025-12-23T00:13:06Z DEBUG openai.agents: MCP tool codex completed.
+2025-12-23T00:13:06Z DEBUG openai.agents: Creating span <agents.tracing.span_data.MCPListToolsSpanData object at 0x7f332de58750> with id None
+2025-12-23T00:13:06Z DEBUG openai.agents: Running agent Executor (turn 2)
+2025-12-23T00:13:06Z DEBUG openai.agents: Creating span <agents.tracing.span_data.ResponseSpanData object at 0x7f332c143f90> with id None
+2025-12-23T00:13:06Z DEBUG openai.agents: Calling LLM
+2025-12-23T00:13:07Z DEBUG openai.agents: Exported 2 items
+2025-12-23T00:13:10Z DEBUG openai.agents: LLM responded
+2025-12-23T00:13:10Z DEBUG openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2025-12-23T00:13:10Z DEBUG openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2025-12-23T00:13:10Z DEBUG openai.agents: Creating span <agents.tracing.span_data.FunctionSpanData object at 0x7f332c135400> with id None
+2025-12-23T00:13:10Z DEBUG openai.agents: Invoking MCP tool codex
+2025-12-23T00:13:13Z DEBUG openai.agents: Exported 1 items

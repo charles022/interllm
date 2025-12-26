@@ -26,19 +26,31 @@ sudo install -d /etc/credstore.encrypted
 printf '%s' "$OPENAI_API_KEY" | sudo systemd-creds encrypt - /etc/credstore.encrypted/codex_key
 ```
 
+For a systemd service, load the encrypted credential and run the orchestrator without sudo:
+
+```ini
+[Service]
+LoadCredentialEncrypted=codex_key:/etc/credstore.encrypted/codex_key
+ExecStart=/usr/bin/python /path/to/interllm/src/orchestrator.py
+```
+
 Configuration is managed via `src/.env`. Ensure it contains the path to your credential and your model preferences:
 ```json
 {
   "CREDENTIAL_PATH": "/etc/credstore.encrypted/codex_key",
+  "CREDENTIAL_NAME": "codex_key",
   "INTERLLM_MODEL": "gpt-5-codex",
   "INTERLLM_REASONING_EFFORT": "medium"
 }
 ```
+Set `CREDENTIAL_NAME` to the left-hand side of `LoadCredentialEncrypted=` if it differs from the encrypted file name.
 
 ## Run
 ```bash
 python src/orchestrator.py
 ```
+
+If you prefer the sudo wrapper for local runs, use `src/run.sh` (it skips sudo when `CREDENTIALS_DIRECTORY` is set).
 
 Useful flags:
 - `--input` to point at a different scenario list file

@@ -156,9 +156,26 @@ def normalize_ascii(text: str) -> str:
 
 
 @lru_cache(maxsize=1)
-def load_api_key(credential_path: str) -> str:
-    """Loads the API key strictly from file descriptor 3."""
+def load_api_key(credential_path: str, credential_name: str) -> str:
+    """Loads the API key from systemd credentials or file descriptor 3."""
     import os
+    credentials_dir = os.environ.get("CREDENTIALS_DIRECTORY")
+    systemd_name = (credential_name or "").strip()
+    if credentials_dir:
+        if not systemd_name and credential_path:
+            systemd_name = Path(credential_path).name
+        if systemd_name:
+            cred_path = Path(credentials_dir) / systemd_name
+            try:
+                key = cred_path.read_text(encoding="utf-8").strip()
+            except FileNotFoundError as e:
+                raise RuntimeError(
+                    f"Systemd credential not found: {cred_path}. "
+                    "Check LoadCredentialEncrypted= and CREDENTIAL_NAME."
+                ) from e
+            if not key:
+                raise RuntimeError(f"Systemd credential was empty: {cred_path}.")
+            return key
     try:
         with os.fdopen(3, "r") as f:
             key = f.read().strip()
@@ -166,6 +183,12 @@ def load_api_key(credential_path: str) -> str:
                 raise RuntimeError("API key read from FD 3 was empty.")
             return key
     except OSError as e:
+        if credentials_dir:
+            raise RuntimeError(
+                "API key not available. Either set CREDENTIAL_NAME to read from "
+                "$CREDENTIALS_DIRECTORY or launch via the secure wrapper script "
+                "(src/run_with_api_key_fd.sh)."
+            ) from e
         raise RuntimeError(
             "API key FD 3 not available. This application must be launched "
             "via the secure wrapper script (src/run_with_api_key_fd.sh)."
@@ -640,7 +663,10 @@ async def main() -> None:
     os.environ.setdefault("RUST_BACKTRACE", "1")
 
     print("[orchestrator] Starting orchestrator, attempting to load API key...", file=sys.stderr)
-    api_key = load_api_key(config.get("CREDENTIAL_PATH", ""))
+    api_key = load_api_key(
+        config.get("CREDENTIAL_PATH", ""),
+        config.get("CREDENTIAL_NAME", ""),
+    )
     set_default_openai_key(api_key)
     print("[orchestrator] API key loaded and configured.", file=sys.stderr)
     model_settings = resolve_model_settings(args.model, args.reasoning_effort)
